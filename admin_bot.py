@@ -7,12 +7,16 @@ import os
 import threading
 import logging
 from logging.handlers import RotatingFileHandler
+from dotenv import load_dotenv
 
-
-
-TOKEN = "7954598876:AAEGe5oDWJrLUXJp2x4zaBmj5LPbmZ3pZ5A"
-bot = telebot.TeleBot(TOKEN)
 ADMIN_IDS = [1097966097]
+load_dotenv()  # Загружает переменные из .env
+ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")  # Получает токен
+
+if not ADMIN_BOT_TOKEN:
+    raise ValueError("Токен бота не найден в .env файле!")
+
+bot = telebot.TeleBot(ADMIN_BOT_TOKEN)
 
 
 conn = sqlite3.connect('restaurant_bot.db', check_same_thread=False)

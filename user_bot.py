@@ -9,12 +9,16 @@ import time
 import logging
 from logging.handlers import RotatingFileHandler
 from threading import Lock
+from dotenv import load_dotenv
 
 
+load_dotenv()  # Загружает переменные из .env
+USER_BOT_TOKEN = os.getenv("USER_BOT_TOKEN")  # Получает токен
 
-TOKEN = "8120214959:AAGnIs0aYSk3pQQVAsTTzmRtS_yYhyugyI4"
-ADMIN_BOT_ID = "@AdminSupSmorodRestBot"
-bot = telebot.TeleBot(TOKEN)
+if not USER_BOT_TOKEN:
+    raise ValueError("Токен бота не найден в .env файле!")
+
+bot = telebot.TeleBot(USER_BOT_TOKEN)
 
 # Настройка логирования
 logging.basicConfig(
